@@ -1,27 +1,12 @@
 const TAILLES = Object.freeze({
     PETIT: 0,
     MOYEN: 1,
-    GRAND: 2,
-
-    include(taille) {
-        return (
-            TAILLES.PETIT === taille
-            || TAILLES.MOYEN === taille
-            || TAILLES.GRAND === taille
-        );
-    }
+    GRAND: 2
 });
 
 const COULEURS = Object.freeze({
     BLEU: 0,
-    ROUGE: 1,
-
-    include(couleur) {
-        return (
-            COULEURS.BLEU === couleur
-            || COULEURS.ROUGE === couleur
-        );
-    }
+    ROUGE: 1
 });
 
 class Pion {
@@ -29,9 +14,9 @@ class Pion {
     #couleur;
 
     constructor(taille, couleur) {
-        if (!TAILLES.include(taille)) {
+        if (!Object.values(TAILLES).includes(taille)) {
             throw new TypeError("taille invalide (class : Pion)");
-        } else if (!COULEURS.include(couleur)) {
+        } else if (!Object.values(COULEURS).includes(couleur)) {
             throw new TypeError("couleur invalide (class : Pion)");
         }
 
