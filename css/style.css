@@ -1,24 +1,38 @@
 /* Classes --------------------------------------- */
 .ligne_c {
-    height: 30px;
-    width: 90px;
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
 
-    background-color: red;
+    display: flex;
+    flex-direction: row;
 }
 
 .cellule_c {
-    height: 30px;
-    width: 30px;
+    height: 150px;
+    width: 150px;
+
+    position: relative;
+    margin: auto;
 
     background-color: blue;
 }
 
 /* ID -------------------------------------------- */
 #plateau_id {
-    height: 90px;
-    width: 90px;
+    height: 600px;
+    width: 600px;
+
+    position: relative;
+    margin: auto;
 
     background-color: green;
+
+    display: flex;
+    flex-direction: column;
 }
 
 /* Autres ---------------------------------------- */
+body {
+    text-align: center;
+}

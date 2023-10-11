@@ -3,25 +3,29 @@ const PLATEAU = document.getElementById("plateau_id");
 
 /* Variables ------------------------------------------------------ */
 
-/* Evènements ----------------------------------------------------- */
-
 /* Démarage ------------------------------------------------------- */
 creerPlateauHTML();
 
+/* Evènements ----------------------------------------------------- */
+
 /* Fonctions ------------------------------------------------------ */
 function creerPlateauHTML() {
-    let i;
-    const ligne = document.createElement("div");
-    const cellule = document.createElement("div");
+    let cellule;
+    let ligne;
+    let lig;
+    let col;
 
-    ligne.classList.add("ligne_c");
-    cellule.classList.add("cellule_c");
+    for (lig = 0; lig < 3; lig++) {
+        ligne = document.createElement("div");
+        ligne.classList.add("ligne_c");
 
-    for (i = 0; i < 3; i++) {
-        ligne.appendChild(cellule);
-    }
+        for (col = 0; col < 3; col++) {
+            cellule = document.createElement("div");
+            cellule.classList.add("cellule_c");
 
-    for (i = 0; i < 3; i++) {
+            ligne.appendChild(cellule);
+        }
+
         PLATEAU.appendChild(ligne);
     }
 }
