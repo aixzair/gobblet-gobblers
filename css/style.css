@@ -1,0 +1,24 @@
+/* Classes --------------------------------------- */
+.ligne_c {
+    height: 30px;
+    width: 90px;
+
+    background-color: red;
+}
+
+.cellule_c {
+    height: 30px;
+    width: 30px;
+
+    background-color: blue;
+}
+
+/* ID -------------------------------------------- */
+#plateau_id {
+    height: 90px;
+    width: 90px;
+
+    background-color: green;
+}
+
+/* Autres ---------------------------------------- */
