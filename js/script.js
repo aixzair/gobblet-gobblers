@@ -23,6 +23,8 @@ function creerPlateauHTML() {
         for (col = 0; col < 3; col++) {
             cellule = document.createElement("div");
             cellule.classList.add("cellule_c");
+            cellule.dataset.ligne = lig;
+            cellule.dataset.colonne = col;
 
             ligne.appendChild(cellule);
         }
