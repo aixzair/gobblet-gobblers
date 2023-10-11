@@ -2,6 +2,7 @@
 const PLATEAU = document.getElementById("plateau_id");
 
 /* Variables ------------------------------------------------------ */
+let plateau;
 
 /* Démarage ------------------------------------------------------- */
 creerPlateauHTML();
