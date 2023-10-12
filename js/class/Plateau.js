@@ -63,4 +63,58 @@ class Plateau {
 
         return cellule;
     }
+
+    #getNiveauLibre(ligne, colonne) {
+        for (let niv = 0; niv < this.#nbNiveau; niv++) {
+            if (this.#cellules[niv][ligne][colonne] == null) {
+                return niv;
+            }
+        }
+        return -1;
+    }
+
+    estCaseLibre(ligne, colonne) {
+        return this.#getNiveauLibre(ligne, colonne) != -1;
+    }
+
+    poserPion(pion, ligne, colonne) {
+        this.#checkCoordonnee(ligne, colonne, "(poserPion : Plateau)");
+
+        if (!(pion instanceof Pion)) {
+            throw new TypeError("pion invalide (poserPion : Plateau)");
+        }
+
+        const pionDessous = this.getCellule(ligne, colonne);
+        const niveauLibre = this.#getNiveauLibre();
+
+        if (pionDessous != null) {
+            if (pion.getTaille() <= pionDessous.getTaille()) {
+                throw new Error("pion trop petit (poserPion : Plateau)");
+            }
+        }
+
+        if (niveauLibre == -1) {
+            throw new Error("impossible de poser un pion (poserPion : Plateau)");
+        }
+
+        this.#cellules[niveauLibre][ligne][colonne] = pion;
+    }
+
+    #checkCoordonnee(ligne, colonne, info) {
+        if (isNaN(ligne)) {
+            throw new TypeError(`ligne invalide ${info}`);
+        } else if (ligne < 0) {
+            throw new RangeError(`l'index de ligne ne peux pas être négatif ${info}`);
+        } else if (ligne >= this.#nbLigne) {
+            throw new RangeError(`l'index de ligne est supérieur au nombre de lignes ${info}`);
+        }
+        
+        if (isNaN(colonne)) {
+            throw new TypeError(`colonne invalide ${info}`);
+        } else if (colonne < 0) {
+            throw new RangeError(`l'index de colonne ne peux pas être négatif ${info}`);
+        } else if (colonne >= this.#nbColonne) {
+            throw new RangeError(`l'index de colonne est supérieur au nombre de colonnes ${info}`);
+        }
+    }
 }

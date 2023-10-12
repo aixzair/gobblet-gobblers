@@ -1,0 +1,11 @@
+Joueur :
+-> Poser un pion :
+    - Choisir un pion
+    - Poser le pion
+
+-> Bouger un pion :
+    - Sélection le pion
+    - Pose le pion
+
+- Valider le coup
+- Annuler
