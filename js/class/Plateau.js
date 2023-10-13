@@ -50,6 +50,8 @@ class Plateau {
     }
 
     getCellule(ligne, colonne) {
+        this.#checkCoordonnee(ligne, colonne, "(getCellule : Plateau)");
+
         let niv;
         let cellule = this.#cellules[0][ligne][colonne];
 
