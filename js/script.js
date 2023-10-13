@@ -6,6 +6,7 @@ let plateau;
 
 /* Démarage ------------------------------------------------------- */
 plateau = new Plateau(Object.values(TAILLES).length, 3, 3);
+new Joueur(COULEURS.ROUGE);
 creerPlateauHTML();
 
 /* Evènements ----------------------------------------------------- */
