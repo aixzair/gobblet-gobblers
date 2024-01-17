@@ -1,11 +1,13 @@
+import { Plateau } from './class/Plateau.js';
+import { TAILLES } from './class/Enums.js'
+
 /* Constantes ----------------------------------------------------- */
-const PLATEAU = document.getElementById("plateau_id");
+const PLATEAU_HTML = document.getElementById("plateau_id");
 
 /* Variables ------------------------------------------------------ */
-let plateau;
+const plateau  = new Plateau(Object.values(TAILLES).length, 3, 3);
 
 /* Démarage ------------------------------------------------------- */
-plateau = new Plateau(Object.values(TAILLES).length, 3, 3);
 creerPlateauHTML();
 
 /* Evènements ----------------------------------------------------- */
@@ -22,16 +24,21 @@ function creerPlateauHTML() {
         ligne.classList.add("ligne_c");
 
         for (col = 0; col < plateau.getNbColonne(); col++) {
+            const e_lig = lig;
+            const e_col = col;
+
             cellule = document.createElement("div");
             cellule.classList.add("cellule_c");
             cellule.dataset.ligne = lig;
             cellule.dataset.colonne = col;
 
+            cellule.addEventListener("click", function() {
+                plateau.jouerCoup(e_lig, e_col);
+            });
+
             ligne.appendChild(cellule);
         }
 
-        PLATEAU.appendChild(ligne);
+        PLATEAU_HTML.appendChild(ligne);
     }
 }
-
-

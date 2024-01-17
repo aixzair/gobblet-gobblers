@@ -1,6 +1,6 @@
-// require Enum.js
+import { TAILLES, COULEURS } from "./Enums.js";
 
-class Pion {
+export class Pion {
     #taille;
     #couleur;
 
