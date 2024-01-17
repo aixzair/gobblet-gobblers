@@ -3,8 +3,3 @@ export const TAILLES = Object.freeze({
     MOYEN: 1,
     GRAND: 2
 });
-
-export const COULEURS = Object.freeze({
-    BLEU: 0,
-    ROUGE: 1
-});

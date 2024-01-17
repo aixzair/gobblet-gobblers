@@ -1,4 +1,4 @@
-import { Plateau } from './class/Plateau.js';
+import { Plateau } from './modeles/Plateau.js';
 import { TAILLES } from './class/Enums.js'
 
 /* Constantes ----------------------------------------------------- */

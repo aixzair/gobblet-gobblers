@@ -1,4 +1,4 @@
-import { TAILLES, COULEURS } from "./Enums.js";
+import { TAILLES, COULEURS } from "../class/Enums.js";
 
 export class Pion {
     #taille;
