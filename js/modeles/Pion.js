@@ -1,10 +1,11 @@
-import { TAILLES, COULEURS } from "../class/Enums.js";
+import { COULEURS } from "./enumerations/Couleur.js";
+import { TAILLES } from "./enumerations/Taille.js";
 
 export class Pion {
     #taille;
     #couleur;
 
-    constructor(taille, couleur) {
+    constructor(taille = TAILLES.AUCUN, couleur = COULEURS.AUCUNE) {
         if (!Object.values(TAILLES).includes(taille)) {
             throw new TypeError("taille invalide (class : Pion)");
         } else if (!Object.values(COULEURS).includes(couleur)) {
@@ -15,11 +16,11 @@ export class Pion {
         this.#couleur = couleur;
     }
 
-    getTaille() {
+    get taille() {
         return this.#taille;
     }
 
-    getCouleur() {
+    get couleur() {
         return this.#couleur;
     }
 }

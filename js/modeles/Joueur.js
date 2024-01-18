@@ -1,5 +1,3 @@
-// require Enum.js
-
 class Joueur {
     #pions;
 

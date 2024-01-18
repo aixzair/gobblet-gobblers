@@ -1,4 +1,5 @@
 export const COULEURS = Object.freeze({
-    BLEU: 0,
-    ROUGE: 1
+    AUCUNE: 0,
+    BLEU: 1,
+    ROUGE: 2
 });

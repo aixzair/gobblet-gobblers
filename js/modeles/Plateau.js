@@ -1,3 +1,4 @@
+import { TAILLES } from "./enumerations/Taille.js";
 import { Pion } from "./Pion.js";
 
 export class Plateau {
@@ -6,10 +7,8 @@ export class Plateau {
     #nbColonne;
     #nbNiveau;
 
-    constructor(niveau, ligne, colonne) {
-        if (isNaN(niveau)) {
-            throw new TypeError("niveau invalide (constructor : Plateau)");
-        } else if (isNaN(ligne)) {
+    constructor(ligne, colonne) {
+        if (isNaN(ligne)) {
             throw new TypeError("ligne invalide (constructor : Plateau)");
         } else if (isNaN(colonne)) {
             throw new TypeError("colonne invalide (constructor : Plateau)");
@@ -19,7 +18,7 @@ export class Plateau {
         let lig;
         let col;
         
-        this.#nbNiveau = niveau;
+        this.#nbNiveau = Object.values(TAILLES).length;
         this.#nbLigne = ligne;
         this.#nbColonne = colonne;
         this.#cellules = new Array(this.#nbNiveau);
@@ -37,20 +36,20 @@ export class Plateau {
         }
     }
 
-    getNbNiveau() {
+    get nbNiveau() {
         return this.#nbNiveau;
     }
 
-    getNbLigne() {
+    get nbLigne() {
         return this.#nbLigne;
     }
 
-    getNbColonne() {
+    get nbColonne() {
         return this.#nbColonne;
     }
 
     getCellule(ligne, colonne) {
-        this.#checkCoordonnee(ligne, colonne, "(getCellule : Plateau)");
+        this.#verifierCoordonnee(ligne, colonne, "(getCellule : Plateau)");
 
         let niv;
         let cellule = this.#cellules[0][ligne][colonne];
@@ -84,7 +83,7 @@ export class Plateau {
     }
 
     poserPion(pion, ligne, colonne) {
-        this.#checkCoordonnee(ligne, colonne, "(poserPion : Plateau)");
+        this.#verifierCoordonnee(ligne, colonne, "(poserPion : Plateau)");
 
         if (!(pion instanceof Pion)) {
             throw new TypeError("pion invalide (poserPion : Plateau)");
@@ -106,7 +105,7 @@ export class Plateau {
         this.#cellules[niveauLibre][ligne][colonne] = pion;
     }
 
-    #checkCoordonnee(ligne, colonne, info) {
+    #verifierCoordonnee(ligne, colonne, info) {
         if (isNaN(ligne)) {
             throw new TypeError(`ligne invalide ${info}`);
         } else if (ligne < 0) {

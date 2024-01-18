@@ -1,5 +1,6 @@
 export const TAILLES = Object.freeze({
-    PETIT: 0,
-    MOYEN: 1,
-    GRAND: 2
+    AUCUN: 0,
+    PETIT: 1,
+    MOYEN: 2,
+    GRAND: 3
 });
