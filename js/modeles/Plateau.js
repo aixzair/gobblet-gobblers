@@ -1,6 +1,6 @@
-// require Pion.js
+import { Pion } from "./Pion.js";
 
-class Plateau {
+export class Plateau {
     #cellules;
     #nbLigne;
     #nbColonne;
@@ -64,6 +64,10 @@ class Plateau {
         }
 
         return cellule;
+    }
+
+    jouerCoup(ligne, colonne) {
+        console.log("coup = " + ligne + " ; " + colonne);
     }
 
     #getNiveauLibre(ligne, colonne) {
