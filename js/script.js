@@ -28,10 +28,22 @@ function creerPlateauHTML() {
             cellule.dataset.ligne = lig;
             cellule.dataset.colonne = col;
 
+            cellule.addEventListener("click", event => {
+                jouer(event);
+            });
+
             ligne.appendChild(cellule);
         }
 
         PLATEAU.appendChild(ligne);
+    }
+}
+
+function jouer(event) {
+    const element = event.target;
+
+    if () {
+        
     }
 }
 

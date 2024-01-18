@@ -9,3 +9,13 @@ Joueur :
 
 - Valider le coup
 - Annuler
+
+TODO :
+- mètre bouton annuler et Valider
+- afficher les pions du joueur (sélectionnable)
+- trouver images pions
+
+petit : petit cercle
+moyen : moyen cercle avec bordure
+grand : grand cercle foncé avec bordure couleur précédente
+

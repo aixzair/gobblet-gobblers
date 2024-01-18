@@ -1,4 +1,24 @@
-/* Classes --------------------------------------- */
+
+/* Autres ---------------------------------------- */
+body {
+    text-align: center;
+}
+
+/* Plateau --------------------------------------- */
+
+#plateau_id {
+    height: 600px;
+    width: 600px;
+
+    position: relative;
+    margin: auto;
+
+    background-color: green;
+
+    display: flex;
+    flex-direction: column;
+}
+
 .ligne_c {
     position: relative;
     margin-top: auto;
@@ -18,21 +38,26 @@
     background-color: blue;
 }
 
-/* ID -------------------------------------------- */
-#plateau_id {
-    height: 600px;
-    width: 600px;
-
-    position: relative;
-    margin: auto;
-
-    background-color: green;
-
-    display: flex;
-    flex-direction: column;
+/* Pions ----------------------------------------- */
+.pion-petit {
+    background-color: rgb(255, 17, 0);
 }
 
-/* Autres ---------------------------------------- */
-body {
-    text-align: center;
+.pion-moyen {
+    background-color: lightcoral;
 }
+
+.pion-grand {
+    background-color: darkred;
+}
+
+.pion-rouge {
+    background-color: red;
+}
+
+.pion-bleu {
+    background-color: blue;
+}
+
+
+
