@@ -14,11 +14,16 @@ export class Jeu {
         return this.#plateau;
     }
 
-    lancer() {
+    commencer() {
         this.#affichage.creerPlateau();
     }
 
-    jouerCoup(ligne, colonne) {
-        this.#plateau.jouerCoup(ligne, colonne);
+    jouerCoup(ligne, colonne, cellule) {
+        const pion = this.#plateau.jouerCoup(ligne, colonne);
+
+        if (pion != null) {
+            this.#affichage.actualiserCellule(cellule, pion);
+        }
+        
     }
 }

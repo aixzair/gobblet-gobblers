@@ -5,7 +5,7 @@ export class Pion {
     #taille;
     #couleur;
 
-    constructor(taille = TAILLES.AUCUN, couleur = COULEURS.AUCUNE) {
+    constructor(couleur = COULEURS.AUCUNE, taille = TAILLES.AUCUN) {
         if (!Object.values(TAILLES).includes(taille)) {
             throw new TypeError("taille invalide (class : Pion)");
         } else if (!Object.values(COULEURS).includes(couleur)) {
@@ -22,5 +22,10 @@ export class Pion {
 
     get couleur() {
         return this.#couleur;
+    }
+
+    estPlusGrand(pionAutre) {
+        return pionAutre != null
+            && this.#taille > pionAutre.taille;
     }
 }

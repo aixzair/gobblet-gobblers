@@ -1,4 +1,4 @@
-import { Jeu } from './../controleurs/Jeu.js';
+import { Jeu } from "./../controleurs/Jeu.js";
 
 export class Affichage {
     static #PLATEAU_HTML = document.getElementById("plateau_id");
@@ -31,8 +31,8 @@ export class Affichage {
                 cellule.dataset.ligne = lig;
                 cellule.dataset.colonne = col;
     
-                cellule.addEventListener("click", function() {
-                    e_jeu.jouerCoup(e_lig, e_col);
+                cellule.addEventListener("click", function(evenement) {
+                    e_jeu.jouerCoup(e_lig, e_col, evenement.target);
                 });
     
                 ligne.appendChild(cellule);
@@ -40,5 +40,16 @@ export class Affichage {
     
             Affichage.#PLATEAU_HTML.appendChild(ligne);
         }
+    }
+
+    actualiserCellule(cellule, pion) {
+        const pionHTML = document.createElement("div");
+        pionHTML.classList.add("pion-petit");
+        pionHTML.classList.add("pion-rouge");
+
+        while (cellule.firstChild) {
+            cellule.removeChild(cellule.firstChild);
+        }
+        cellule.appendChild(pionHTML);
     }
 }

@@ -29,34 +29,42 @@ body {
 }
 
 .cellule_c {
-    height: 150px;
-    width: 150px;
-
     position: relative;
     margin: auto;
 
-    background-color: blue;
+    height: 150px;
+    width: 150px;
+    background-color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 /* Pions ----------------------------------------- */
 .pion-petit {
-    background-color: rgb(255, 17, 0);
+    width: 25px;
+    height: 25px;
 }
 
 .pion-moyen {
-    background-color: lightcoral;
+    width: 75px;
+    height: 75px;
 }
 
 .pion-grand {
-    background-color: darkred;
+    width: 125px;
+    height: 125px;
 }
 
 .pion-rouge {
     background-color: red;
+    border-radius: 50%;
 }
 
 .pion-bleu {
     background-color: blue;
+    border-radius: 50%;
 }
 
 

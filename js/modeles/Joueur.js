@@ -1,18 +1,16 @@
-class Joueur {
-    #pions;
+import { COULEURS } from "./enumerations/Couleur.js";
+
+export class Joueur {
+    #couleur;
 
     constructor(couleur) {
         if (!Object.values(COULEURS).includes(couleur)) {
             throw new TypeError(`couleur invalide (construtor Joueur)`);
         }
-
-        this.#pions = {};
-        for (const key in TAILLES) {
-            this.#pions[key] = 2;
-        }
+        this.#couleur = couleur;
     }
 
-    getPions() {
-        return this.#pions;
+    get couleur() {
+        return this.#couleur;
     }
 }

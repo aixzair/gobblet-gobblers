@@ -1,3 +1,3 @@
-import { Jeu } from './controleurs/Jeu.js';
+import { Jeu } from "./controleurs/Jeu.js";
 
-(new Jeu()).lancer();
+(new Jeu()).commencer();
