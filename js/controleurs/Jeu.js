@@ -15,7 +15,7 @@ export class Jeu {
     }
 
     commencer() {
-        this.#affichage.creerPlateau();
+        this.#affichage.creerPartie();
     }
 
     jouerCoup(ligne, colonne, cellule) {

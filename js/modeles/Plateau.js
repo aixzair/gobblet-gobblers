@@ -42,6 +42,10 @@ export class Plateau {
         return this.#nbColonne;
     }
 
+    get joueurActuel() {
+        return this.#joueurs[this.#joueurActuel];
+    }
+
     #initialiserCellules() {
         let niv;
         let lig;

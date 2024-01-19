@@ -4,22 +4,31 @@ body {
     text-align: center;
 }
 
+/* Gobblet Gobblers ------------------------------ */
+
+#gobblet-gobblers {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;    
+}
+
 /* Plateau --------------------------------------- */
 
-#plateau_id {
+#gb-plateau {
     height: 600px;
     width: 600px;
 
     position: relative;
-    margin: auto;
-
     background-color: green;
+
+    border: 5px solid black;
+    border-right: 0px;
 
     display: flex;
     flex-direction: column;
 }
 
-.ligne_c {
+.gb-ligne {
     position: relative;
     margin-top: auto;
     margin-bottom: auto;
@@ -28,7 +37,7 @@ body {
     flex-direction: row;
 }
 
-.cellule_c {
+.gb-cellule {
     position: relative;
     margin: auto;
 
@@ -41,31 +50,59 @@ body {
     justify-content: center;
 }
 
+/* Menu ------------------------------------------ */
+#gb-menu {
+    height: 600px;
+    width: 200px;
+
+    position: relative;
+    background-color: green;
+    border: 5px solid black;
+
+    display: flex;
+    flex-direction: column;
+}
+
+#gb-menu-pions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gb-menu-pions-item {
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 /* Pions ----------------------------------------- */
-.pion-petit {
-    width: 25px;
-    height: 25px;
+.gb-pion-petit {
+    width: 40px;
+    height: 40px;
+    font-size: 15px;
 }
 
-.pion-moyen {
-    width: 75px;
-    height: 75px;
+.gb-pion-moyen {
+    width: 80px;
+    height: 80px;
+    font-size: 30px;
 }
 
-.pion-grand {
-    width: 125px;
-    height: 125px;
+.gb-pion-grand {
+    width: 120px;
+    height: 120px;
+    font-size: 45px;
 }
 
-.pion-rouge {
+.gb-pion-rouge {
     background-color: red;
     border-radius: 50%;
 }
 
-.pion-bleu {
+.gb-pion-bleu {
     background-color: blue;
     border-radius: 50%;
 }
-
-
-
