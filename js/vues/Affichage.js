@@ -214,4 +214,14 @@ export class Affichage {
         pionHTML.removeEventListener("click", this.#onDeselectionnerPion);
         pionHTML.addEventListener("click", this.#onSelectionnerPion);
     }
+
+    /**
+     * Affiche le gagant
+     * @param {string} gagnant le gagnant de la partie
+     */
+    terminerPartie(gagnant) {
+        setTimeout(() => {
+            alert(`Bravo à ${gagnant}, le gagnant !`);
+        }, 500);
+    }
 }

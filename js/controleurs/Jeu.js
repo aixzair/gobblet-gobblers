@@ -67,20 +67,33 @@ export class Jeu {
      * @param {Pion} cellule affiché
      */
     jouerCoup(ligne, colonne, cellule) {
+        // Vérifie si un pion est sélectionné
         if (this.#pionHTMLSelectionne == null) {
             return;
         }
+
         const pion = new Pion(
             this.#plateau.joueurActuel.couleur,
             parseInt(this.#pionHTMLSelectionne.dataset.taille)
         );
+        let gagnant;
 
+        // Pose le pion puis actualise l'affichage
         if (!this.#plateau.poserPion(ligne, colonne, pion)) {
             return;
         }
-
-        this.#pionHTMLSelectionne = null;
         this.#affichage.actualiserCellule(cellule, pion);
-        this.#affichage.actualiserMenuPions();
+
+        // Vérifie si il y a un gagant
+        if ((gagnant = this.#plateau.gagnant) != null) {
+            this.#affichage.terminerPartie(gagnant);
+
+            setTimeout(() => {
+                location.reload();
+            }, 1000);
+        } else {
+            this.#pionHTMLSelectionne = null;
+            this.#affichage.actualiserMenuPions();
+        }
     }
 }

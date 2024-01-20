@@ -1,4 +1,4 @@
-import { COULEURS } from "./enumerations/Couleur.js";
+import { COULEURS, COULEURS_F } from "./enumerations/Couleur.js";
 import { TAILLES } from "./enumerations/Taille.js";
 import { Joueur } from "./Joueur.js";
 import { Pion } from "./Pion.js";
@@ -15,6 +15,7 @@ export class Plateau {
 
     #joueurs;
     #joueurActuel;
+    #joueurGagant;
 
     /**
      * Construit un nouveau plateau
@@ -37,6 +38,7 @@ export class Plateau {
         this.#joueurs[0] = new Joueur(COULEURS.BLEU);
         this.#joueurs[1] = new Joueur(COULEURS.ROUGE);
         this.#joueurActuel = 0;
+        this.#joueurGagant = null;
     }
 
     /**
@@ -72,6 +74,14 @@ export class Plateau {
     }
 
     /**
+     * Renvoie le gagant
+     * @return {string}
+     */
+    get gagnant() {
+        return this.#joueurGagant;
+    }
+
+    /**
      * Place sur le plateau des pions n'ayant pas de taille
      */
     #initialiserCellules() {
@@ -88,7 +98,7 @@ export class Plateau {
                 this.#cellules[niv][lig] = new Array(this.#nbColonne);
 
                 for (col = 0; col < this.#nbColonne; col++) {
-                    this.#cellules[niv][lig][col] = new Pion(COULEURS.AUCUNE, TAILLES.AUCUN);
+                    this.#cellules[niv][lig][col] = new Pion(COULEURS.AUCUN, TAILLES.AUCUN);
                 }
             }
         }
@@ -102,6 +112,10 @@ export class Plateau {
      * @return {boolean} si le pion est posé
      */
     poserPion(ligne, colonne, pion) {
+        if (this.#joueurGagant != null) {
+            throw new Error("La partie est terminé");
+        }
+
         try {
             this.#insererPion(
                 ligne,
@@ -115,7 +129,10 @@ export class Plateau {
         }
 
         this.#joueurs[this.#joueurActuel].retirerPion(pion.taille);
-        this.#joueurActuel = (this.#joueurActuel + 1) % this.#joueurs.length;
+
+        if (!this.#estPartieTermine()) {
+            this.#joueurActuel = (this.#joueurActuel + 1) % this.#joueurs.length;
+        }
 
         return true;
     }
@@ -181,5 +198,114 @@ export class Plateau {
             }
         }
         return -1;
+    }
+
+    /**
+     * Renvoie si la partie est terminé
+     * @return {boolean} partie terminé
+     */
+    #estPartieTermine() {
+        let numero;
+        let couleur;
+
+        // Vérifie les lignes
+        for (numero = 0; numero < this.#nbLigne; numero++) {
+            if ((couleur = this.#verifierLigne(numero)) != null) {
+                this.#joueurGagant = COULEURS_F.toString(couleur);
+                return true;
+            }
+        }
+
+        // Vérifie les colonnes
+        for (numero = 0; numero < this.#nbColonne; numero++) {
+            if ((couleur = this.#verifierColonne(numero)) != null) {
+                this.#joueurGagant = COULEURS_F.toString(couleur);
+                return true;
+            }
+        }
+
+        // Vérifie les diagonales
+        if ((couleur = this.#verifierDiagonales()) != null) {
+            this.#joueurGagant = COULEURS_F.toString(couleur);
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * Vérifie une ligne
+     * @param {int} ligne numéro de la ligne
+     * @return {string ?} la couleur gagnante
+     */
+    #verifierLigne(ligne) {
+        const couleur = this.getCellule(ligne, 0).couleur;
+        if (couleur == COULEURS.AUCUN) {
+            return null;
+        }
+        for (let colonne = 1; colonne < this.#nbColonne; colonne++) {
+            if (couleur != this.getCellule(ligne, colonne).couleur) {
+                return null;
+            }
+        }
+        return couleur;
+    }
+
+    /**
+     * Vérifie une colonne
+     * @param {int} colonne numéro de la colonne
+     * @return {string ?} la couleur gagnante
+     */
+    #verifierColonne(colonne) {
+        const couleur = this.getCellule(0, colonne).couleur;
+        if (couleur == COULEURS.AUCUN) {
+            return null;
+        }
+        for (let ligne = 1; ligne < this.#nbLigne; ligne++) {
+            if (couleur != this.getCellule(ligne, colonne).couleur) {
+                return null;
+            }
+        }
+        return couleur;
+    }
+
+    /**
+     * Vérifie les diagonales
+     * @return {string ?} la couleur gagnante
+     */
+    #verifierDiagonales() {
+        if (this.#nbLigne != this.#nbColonne) {
+            return true;
+        }
+
+        let couleur;
+        let position;
+
+        // Vérifie la première diagonale
+        couleur = this.getCellule(0, 0).couleur;
+        if (couleur != COULEURS.AUCUN) {
+            for (position = 1; position < this.#nbLigne; position++) {
+                if (couleur != this.getCellule(position, position).couleur) {
+                    couleur = COULEURS.AUCUN;
+                    break;
+                }
+            }
+            if (couleur != COULEURS.AUCUN) {
+                return couleur;
+            }
+        }
+
+        // Vérifie la seconde diagonale
+        couleur = this.getCellule(0, this.#nbLigne - 1).couleur;
+        if (couleur == COULEURS.AUCUN) {
+            return null;
+        }
+        for (position = 1; position < this.#nbLigne; position++) {
+            if (couleur != this.getCellule(position, this.#nbLigne - (1 + position)).couleur) {
+                return null;
+            }
+        }
+
+        return couleur;
     }
 }
