@@ -3,6 +3,10 @@ import { TAILLES } from "./enumerations/Taille.js";
 import { Joueur } from "./Joueur.js";
 import { Pion } from "./Pion.js";
 
+/**
+ * Gère les pions sur le plateau
+ * (Un plateau est composé de cellules (cases))
+ */
 export class Plateau {
     #cellules;
     #nbLigne;
@@ -12,16 +16,21 @@ export class Plateau {
     #joueurs;
     #joueurActuel;
 
-    constructor(ligne, colonne) {
-        if (isNaN(ligne)) {
+    /**
+     * Construit un nouveau plateau
+     * @param {int} nbLigne nombre de lignes
+     * @param {int} nbColonne nombre de colonnes
+     */
+    constructor(nbLigne, nbColonne) {
+        if (isNaN(nbLigne)) {
             throw new TypeError("ligne invalide (constructor : Plateau)");
-        } else if (isNaN(colonne)) {
+        } else if (isNaN(nbColonne)) {
             throw new TypeError("colonne invalide (constructor : Plateau)");
         }
         
         this.#nbNiveau = Object.values(TAILLES).length - 1;
-        this.#nbLigne = ligne;
-        this.#nbColonne = colonne;
+        this.#nbLigne = nbLigne;
+        this.#nbColonne = nbColonne;
         this.#initialiserCellules();
         
         this.#joueurs = new Array(2);
@@ -30,22 +39,41 @@ export class Plateau {
         this.#joueurActuel = 0;
     }
 
+    /**
+     * Renvoie le nombre de niveaux
+     * @return {int}
+     */
     get nbNiveau() {
         return this.#nbNiveau;
     }
 
+    /**
+     * Renvoie le nombre de lignes
+     * @return {int}
+     */
     get nbLigne() {
         return this.#nbLigne;
     }
 
+    /**
+     * Renvoie le nombre de colonnes
+     * @return {int}
+     */
     get nbColonne() {
         return this.#nbColonne;
     }
 
+    /**
+     * Renvoie le joueur actuel
+     * @return {Joueur}
+     */
     get joueurActuel() {
         return this.#joueurs[this.#joueurActuel];
     }
 
+    /**
+     * Place sur le plateau des pions n'ayant pas de taille
+     */
     #initialiserCellules() {
         let niv;
         let lig;
@@ -66,15 +94,22 @@ export class Plateau {
         }
     }
 
+    /**
+     * Pose un pion sur le plateau
+     * @param {int} ligne sur le plateau
+     * @param {int} colonne sur le plateau
+     * @param {Pion} pion à poser
+     * @return {boolean} si le pion est posé
+     */
     poserPion(ligne, colonne, pion) {
         try {
             this.#insererPion(
-                pion,
                 ligne,
-                colonne
+                colonne,
+                pion
             );
         } catch (error) {
-            console.error(error);
+            console.error(error.message);
 
             return false;
         }
@@ -85,7 +120,13 @@ export class Plateau {
         return true;
     }
 
-    #insererPion(pion, ligne, colonne) {
+    /**
+     * Enregistre le pion dans le plateau
+     * @param {int} ligne ligne sur le plateau
+     * @param {int} colonne colonne sur le plateau
+     * @param {Pion} pion pion à insérrer
+     */
+    #insererPion(ligne, colonne, pion) {
         if (!pion instanceof Pion) {
             throw new TypeError("Pion invalide.");
         } else if (!ligne instanceof Number) {
@@ -108,6 +149,12 @@ export class Plateau {
         this.#cellules[niveauLibre][ligne][colonne] = pion;
     }
 
+    /**
+     * Récupère le pion sur une cellule
+     * @param {int} ligne ligne de la cellule
+     * @param {int} colonne colonne de la cellule
+     * @return {Pion}
+     */
     getCellule(ligne, colonne) {
         let cellule = null;
 
@@ -121,6 +168,12 @@ export class Plateau {
         return cellule;
     }
 
+    /**
+     * Renvoie le niveau libre sur une cellule
+     * @param {int} ligne de la cellule
+     * @param {int} colonne de la cellule
+     * @return {int}
+     */
     #getNiveauLibre(ligne, colonne) {
         for (let niveau = 0; niveau < this.#nbNiveau; niveau++) {
             if (this.#cellules[niveau][ligne][colonne].taille == TAILLES.AUCUN) {

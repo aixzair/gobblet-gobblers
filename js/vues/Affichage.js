@@ -2,17 +2,28 @@ import { COULEURS } from "../modeles/enumerations/Couleur.js";
 import { TAILLES } from "../modeles/enumerations/Taille.js";
 import { Jeu } from "./../controleurs/Jeu.js";
 
+/**
+ * Gère l'affiche d'une partie
+ */
 export class Affichage {
     #PARTIE_HTML;
     #MENU_PIONS;
     #jeu;
 
-    /* Evenements ---------------------------- */
+    /**
+     * Fonction délcanché lorsqu'on clique sur un pion
+     */
     #onSelectionnerPion;
+
+    /**
+     * Fonction délcanché lorsqu'on clique sur un pion sélectionné
+     */
     #onDeselectionnerPion;
 
-    /* Fonctions ----------------------------- */
-
+    /**
+     * Créer un affichage pour un jeu
+     * @param {Jeu} jeu à afficher
+     */
     constructor(jeu) {
         if (!jeu instanceof Jeu) {
             throw new TypeError("jeu doit appartenir à la classe Jeu");
@@ -30,12 +41,18 @@ export class Affichage {
         };
     }
 
+    /**
+     * Créer les différents composants visuels de la partie
+     */
     creerPartie() {
         this.#creerPlateau();
         this.#creerMenu();
         this.actualiserMenuPions();
     }
 
+    /**
+     * Créer l'interface du plateau
+     */
     #creerPlateau() {
         const plateau = document.createElement("div");
         plateau.id = "gb-plateau";
@@ -78,6 +95,9 @@ export class Affichage {
         this.#PARTIE_HTML.appendChild(plateau);
     }
 
+    /**
+     * Créer le menu ou son affiché les pions du joueur
+     */
     #creerMenu() {
         const titre = document.createElement("h2");
         const menu = document.createElement("div");
@@ -93,6 +113,9 @@ export class Affichage {
         this.#PARTIE_HTML.appendChild(menu);
     }
 
+    /**
+     * Actualise les pions du joueur lorsque le joueur change
+     */
     actualiserMenuPions() {
         const joueur = this.#jeu.plateau.joueurActuel;
 
@@ -116,6 +139,11 @@ export class Affichage {
         }
     }
 
+    /**
+     * Actualise une cellule quand celle-ci change
+     * @param {HTML} cellule à actualiser
+     * @param {Pion} pion à afficher
+     */
     actualiserCellule(cellule, pion) {
         const pionHTML = this.#creerPionHTML(
             pion.taille,
@@ -128,6 +156,12 @@ export class Affichage {
         cellule.appendChild(pionHTML);
     }
 
+    /**
+     * Créer un pion HTML
+     * @param {TAILLES} taille du pion
+     * @param {COULEURS} couleur du pion
+     * @return {HTML}
+     */
     #creerPionHTML(taille, couleur) {
         const pion = document.createElement("div");
 
@@ -161,12 +195,20 @@ export class Affichage {
         return pion;
     }
 
+    /**
+     * Grise un pion HTML
+     * @param {HTML} pionHTML à griser
+     */
     selectionnerPion(pionHTML) {
         pionHTML.classList.add("gb-pion-selectionner");
         pionHTML.removeEventListener("click", this.#onSelectionnerPion);
         pionHTML.addEventListener("click", this.#onDeselectionnerPion);
     }
 
+    /**
+     * Dégrise un pion HTML
+     * @param {HTML} pionHTML à dégriser
+     */
     deselectionnerPion(pionHTML) {
         pionHTML.classList.remove("gb-pion-selectionner");
         pionHTML.removeEventListener("click", this.#onDeselectionnerPion);
