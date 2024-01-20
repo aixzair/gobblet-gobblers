@@ -5,7 +5,7 @@ export class Pion {
     #taille;
     #couleur;
 
-    constructor(couleur = COULEURS.AUCUNE, taille = TAILLES.AUCUN) {
+    constructor(couleur, taille) {
         if (!Object.values(TAILLES).includes(taille)) {
             throw new TypeError("taille invalide (class : Pion)");
         } else if (!Object.values(COULEURS).includes(couleur)) {

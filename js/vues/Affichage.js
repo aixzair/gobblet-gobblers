@@ -7,6 +7,12 @@ export class Affichage {
     #MENU_PIONS;
     #jeu;
 
+    /* Evenements ---------------------------- */
+    #onSelectionnerPion;
+    #onDeselectionnerPion;
+
+    /* Fonctions ----------------------------- */
+
     constructor(jeu) {
         if (!jeu instanceof Jeu) {
             throw new TypeError("jeu doit appartenir à la classe Jeu");
@@ -14,15 +20,23 @@ export class Affichage {
         this.#PARTIE_HTML = document.getElementById("gobblet-gobblers");
         this.#MENU_PIONS = null;
         this.#jeu = jeu;
+
+        // Evenements
+        this.#onSelectionnerPion = function(evenement) {
+            jeu.selectionnerPion(evenement.target);
+        };
+        this.#onDeselectionnerPion = function(evenement) {
+            jeu.deselectionnerPion(evenement.target);
+        };
     }
 
     creerPartie() {
-        this.creerPlateau();
-        this.creerMenu();
+        this.#creerPlateau();
+        this.#creerMenu();
         this.actualiserMenuPions();
     }
 
-    creerPlateau() {
+    #creerPlateau() {
         const plateau = document.createElement("div");
         plateau.id = "gb-plateau";
 
@@ -46,7 +60,13 @@ export class Affichage {
                 cellule.dataset.colonne = col;
     
                 cellule.addEventListener("click", function(evenement) {
-                    e_jeu.jouerCoup(e_lig, e_col, evenement.target);
+                    let element = evenement.target;
+
+                    if (!element.classList.contains("gb-cellule")) {
+                        element = element.parentNode;
+                    }
+
+                    e_jeu.jouerCoup(e_lig, e_col, element);
                 });
     
                 ligne.appendChild(cellule);
@@ -58,7 +78,7 @@ export class Affichage {
         this.#PARTIE_HTML.appendChild(plateau);
     }
 
-    creerMenu() {
+    #creerMenu() {
         const titre = document.createElement("h2");
         const menu = document.createElement("div");
 
@@ -83,18 +103,24 @@ export class Affichage {
 
         // Ajoute les nouveaux pions
         for (const pionCleTaille in joueur.pions) {
-            const pionHTML = this.creerPionHTML(TAILLES[pionCleTaille], joueur.couleur);
+            if (joueur.pions[pionCleTaille] <= 0) {
+                continue;
+            }
+
+            const pionHTML = this.#creerPionHTML(TAILLES[pionCleTaille], joueur.couleur);
+
             pionHTML.classList.add("gb-menu-pions-item");
             pionHTML.textContent = joueur.pions[pionCleTaille];
-
+            pionHTML.addEventListener("click", this.#onSelectionnerPion);
             this.#MENU_PIONS.appendChild(pionHTML);
         }
     }
 
     actualiserCellule(cellule, pion) {
-        const pionHTML = document.createElement("div");
-        pionHTML.classList.add("gb-pion-petit");
-        pionHTML.classList.add("gb-pion-rouge");
+        const pionHTML = this.#creerPionHTML(
+            pion.taille,
+            pion.couleur
+        );
 
         while (cellule.firstChild) {
             cellule.removeChild(cellule.firstChild);
@@ -102,7 +128,7 @@ export class Affichage {
         cellule.appendChild(pionHTML);
     }
 
-    creerPionHTML(taille, couleur) {
+    #creerPionHTML(taille, couleur) {
         const pion = document.createElement("div");
 
         switch (couleur) {
@@ -113,7 +139,7 @@ export class Affichage {
             pion.classList.add('gb-pion-bleu');
             break;
         default:
-            throw new RangeError("La couleur n'est pas valide (Affichage : creerPionHTML)");
+            throw new RangeError("La couleur n'est pas valide.");
         }
 
         switch (taille) {
@@ -127,9 +153,23 @@ export class Affichage {
             pion.classList.add("gb-pion-grand");
             break;
         default:
-            throw new RangeError("La taille du pion n'est pas valide (Affichage : creerPionHTML");
+            throw new RangeError("La taille du pion n'est pas valide.");
         }
 
+        pion.dataset.taille = taille;
+
         return pion;
+    }
+
+    selectionnerPion(pionHTML) {
+        pionHTML.classList.add("gb-pion-selectionner");
+        pionHTML.removeEventListener("click", this.#onSelectionnerPion);
+        pionHTML.addEventListener("click", this.#onDeselectionnerPion);
+    }
+
+    deselectionnerPion(pionHTML) {
+        pionHTML.classList.remove("gb-pion-selectionner");
+        pionHTML.removeEventListener("click", this.#onDeselectionnerPion);
+        pionHTML.addEventListener("click", this.#onSelectionnerPion);
     }
 }

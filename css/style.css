@@ -7,6 +7,8 @@ body {
 /* Gobblet Gobblers ------------------------------ */
 
 #gobblet-gobblers {
+    user-select: none;
+
     display: flex;
     flex-direction: row;
     justify-content: center;    
@@ -105,4 +107,8 @@ body {
 .gb-pion-bleu {
     background-color: blue;
     border-radius: 50%;
+}
+
+.gb-pion-selectionner {
+    opacity: 0.5;
 }

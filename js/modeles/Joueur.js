@@ -7,7 +7,7 @@ export class Joueur {
 
     constructor(couleur) {
         if (!Object.values(COULEURS).includes(couleur)) {
-            throw new TypeError(`couleur invalide (construtor Joueur)`);
+            throw new TypeError("Couleur invalide.");
         }
         this.#couleur = couleur;
         this.#pions = [];
@@ -26,5 +26,21 @@ export class Joueur {
 
     get pions() {
         return this.#pions;
+    }
+
+    retirerPion(taille) {
+        if (taille == TAILLES.AUCUN) {
+            throw new RangeError("Impossible de retirer un pion n'ayant pas de taille.");
+        }
+        for (const tailleCle in TAILLES) {
+            if (TAILLES[tailleCle] === taille) {
+                if (this.#pions[tailleCle] <= 0) {
+                    throw new RangeError("Impossible de retirer un pion qu'il ne possède pas.");
+                } else {
+                    this.#pions[tailleCle]--;
+                    return;
+                }
+            }
+        }
     }
 }

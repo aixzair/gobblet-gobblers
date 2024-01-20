@@ -60,71 +60,69 @@ export class Plateau {
                 this.#cellules[niv][lig] = new Array(this.#nbColonne);
 
                 for (col = 0; col < this.#nbColonne; col++) {
-                    this.#cellules[niv][lig][col] = new Pion();
+                    this.#cellules[niv][lig][col] = new Pion(COULEURS.AUCUNE, TAILLES.AUCUN);
                 }
             }
         }
     }
 
-    jouerCoup(ligne, colonne) {
-        const pion = new Pion(this.#joueurs[this.#joueurActuel].couleur, TAILLES.PETIT);
-
+    poserPion(ligne, colonne, pion) {
         try {
-            this.#poserPion(
+            this.#insererPion(
                 pion,
                 ligne,
                 colonne
             );
         } catch (error) {
-            console.error(error.message);
+            console.error(error);
 
-            return null;
+            return false;
         }
+
+        this.#joueurs[this.#joueurActuel].retirerPion(pion.taille);
         this.#joueurActuel = (this.#joueurActuel + 1) % this.#joueurs.length;
 
-        return pion;
+        return true;
     }
 
-    #poserPion(pion, ligne, colonne) {
+    #insererPion(pion, ligne, colonne) {
         if (!pion instanceof Pion) {
-            throw new TypeError("pion invalide (poserPion : Plateau)");
+            throw new TypeError("Pion invalide.");
         } else if (!ligne instanceof Number) {
-            throw new TypeError("ligne n'est pas un nombre");
+            throw new TypeError("Ligne n'est pas un nombre.");
         } else if (!colonne instanceof Number) {
-            throw new TypeError("colonne n'est pas un nombre");
+            throw new TypeError("Colonne n'est pas un nombre.");
         }
 
         const pionDessous = this.getCellule(ligne, colonne);
         const niveauLibre = this.#getNiveauLibre(ligne, colonne);
 
         if (!pion.estPlusGrand(pionDessous)) {
-            throw new RangeError("pion trop petit (poserPion : Plateau)");
+            throw new RangeError("Pion trop petit.");
         }
 
         if (niveauLibre == -1) {
-            throw new Error("impossible de poser un pion (poserPion : Plateau)");
+            throw new Error("Impossible de poser un pion.");
         }
 
         this.#cellules[niveauLibre][ligne][colonne] = pion;
     }
 
     getCellule(ligne, colonne) {
-        let niv;
-        let cellule = this.#cellules[0][ligne][colonne];
+        let cellule = null;
 
-        for (niv = 1; niv < this.#nbNiveau; niv++) {
-            if (this.#cellules[niv][ligne][colonne] == null) {
+        for (let niveau = this.#nbNiveau - 1; niveau >= 0; niveau--) {
+            cellule = this.#cellules[niveau][ligne][colonne];
+
+            if (cellule.taille != TAILLES.AUCUN) {
                 return cellule;
-            } else {
-                cellule = this.#cellules[niv][ligne][colonne];
             }
         }
-
         return cellule;
     }
 
     #getNiveauLibre(ligne, colonne) {
-        for (let niveau = this.#nbNiveau - 1; niveau >= 0; niveau--) {
+        for (let niveau = 0; niveau < this.#nbNiveau; niveau++) {
             if (this.#cellules[niveau][ligne][colonne].taille == TAILLES.AUCUN) {
                 return niveau;
             }
