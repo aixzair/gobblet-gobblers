@@ -145,14 +145,19 @@ export class Affichage {
      * @param {Pion} pion à afficher
      */
     actualiserCellule(cellule, pion) {
+        while (cellule.firstChild) {
+            cellule.removeChild(cellule.firstChild);
+        }
+
+        if (pion.couleur == COULEURS.AUCUN) {
+            return;
+        }
+
         const pionHTML = this.#creerPionHTML(
             pion.taille,
             pion.couleur
         );
-
-        while (cellule.firstChild) {
-            cellule.removeChild(cellule.firstChild);
-        }
+        pionHTML.addEventListener("click", this.#onSelectionnerPion);
         cellule.appendChild(pionHTML);
     }
 
@@ -190,6 +195,7 @@ export class Affichage {
             throw new RangeError("La taille du pion n'est pas valide.");
         }
 
+        pion.dataset.couleur = couleur;
         pion.dataset.taille = taille;
 
         return pion;

@@ -129,18 +129,51 @@ export class Plateau {
         }
 
         this.#joueurs[this.#joueurActuel].retirerPion(pion.taille);
-
-        if (!this.#estPartieTermine()) {
-            this.#joueurActuel = (this.#joueurActuel + 1) % this.#joueurs.length;
-        }
+        this.#terminerTour();        
 
         return true;
     }
 
     /**
-     * Enregistre le pion dans le plateau
-     * @param {int} ligne ligne sur le plateau
-     * @param {int} colonne colonne sur le plateau
+     * Déplace le pion d'eune cellule source à une cellule cible
+     * @param {int} ligneSource ligne source
+     * @param {int} colonneSource colonne source
+     * @param {int} ligneCible ligne cible
+     * @param {int} colonneCible colonne cible
+     * @return {boolean} déplacement effecturé
+     */
+    deplacerPion(ligneSource, colonneSource, ligneCible, colonneCible) {
+        try {
+            this.#insererPion(
+                ligneCible,
+                colonneCible, 
+                this.getCellule(ligneSource, colonneSource)
+            );
+        } catch (error) {
+            console.error(error.message);
+
+            return false;
+        }
+
+        this.#retirerPion(ligneSource, colonneSource);
+        this.#terminerTour();
+
+        return true;
+    }
+
+    /**
+     * Termine le tour actuel et passe au prochain tour
+     */
+    #terminerTour() {
+        if (!this.#estPartieTermine()) {
+            this.#joueurActuel = (this.#joueurActuel + 1) % this.#joueurs.length;
+        }
+    }
+
+    /**
+     * Enregistre le pion du plateau
+     * @param {int} ligne ligne du pion
+     * @param {int} colonne colonne du pion
      * @param {Pion} pion pion à insérrer
      */
     #insererPion(ligne, colonne, pion) {
@@ -164,6 +197,26 @@ export class Plateau {
         }
 
         this.#cellules[niveauLibre][ligne][colonne] = pion;
+    }
+
+    /**
+     * Retire un pion du plateau
+     * @param {int} ligne ligne du pion
+     * @param {int} colonne colonne du pion
+     */
+    #retirerPion(ligne, colonne) {
+        if (!ligne instanceof Number) {
+            throw new TypeError("Ligne n'est pas un nombre.");
+        } else if (!colonne instanceof Number) {
+            throw new TypeError("Colonne n'est pas un nombre.");
+        }
+
+        for (let niveau = this.#nbNiveau - 1; niveau >= 0; niveau--) {
+            if (this.#cellules[niveau][ligne][colonne].couleur != COULEURS.AUCUN) {
+                this.#cellules[niveau][ligne][colonne] = new Pion(COULEURS.AUCUN, TAILLES.AUCUN);
+                break;
+            }
+        }
     }
 
     /**
