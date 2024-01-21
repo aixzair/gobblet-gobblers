@@ -258,32 +258,45 @@ export class Plateau {
      * @return {boolean} partie terminé
      */
     #estPartieTermine() {
+        let victoires = [];
+        victoires[this.#joueurs[0].couleur] = 0;
+        victoires[this.#joueurs[1].couleur] = 0;
+
         let numero;
         let couleur;
 
         // Vérifie les lignes
         for (numero = 0; numero < this.#nbLigne; numero++) {
             if ((couleur = this.#verifierLigne(numero)) != null) {
-                this.#joueurGagant = COULEURS_F.toString(couleur);
-                return true;
+                victoires[couleur]++;
             }
         }
 
         // Vérifie les colonnes
         for (numero = 0; numero < this.#nbColonne; numero++) {
             if ((couleur = this.#verifierColonne(numero)) != null) {
-                this.#joueurGagant = COULEURS_F.toString(couleur);
-                return true;
+                victoires[couleur]++;
             }
         }
 
         // Vérifie les diagonales
         if ((couleur = this.#verifierDiagonales()) != null) {
-            this.#joueurGagant = COULEURS_F.toString(couleur);
-            return true;
+            victoires[couleur]++;
         }
 
-        return false;
+        // Si il n'y a pas de gagant
+        if (victoires[this.#joueurs[0].couleur] == victoires[this.#joueurs[1].couleur]) {
+            return false;
+        }
+
+        // Si il y a un gagant
+        if (victoires[this.#joueurs[0].couleur] > victoires[this.#joueurs[1].couleur]) {
+            this.#joueurGagant = COULEURS_F.toString(this.#joueurs[0].couleur);
+        } else {
+            this.#joueurGagant = COULEURS_F.toString(this.#joueurs[1].couleur);
+        }
+
+        return true;
     }
 
     /**
