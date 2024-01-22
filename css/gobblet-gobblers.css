@@ -1,0 +1,125 @@
+/* Gobblet Gobblers ------------------------------ */
+
+#gobblet-gobblers {
+    --max-height:  100%;
+
+    --background-color: rgb(38, 205, 38);
+    --border: 5px;
+    --border-style: solid;
+    --border-color: black;
+
+    --gb-height: 600px;
+
+    user-select: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;    
+}
+
+/* Plateau --------------------------------------- */
+
+#gb-plateau {
+    height: var(--gb-height);
+    width: var(--gb-height);
+
+    border: var(--border);
+    border-style: var(--border-style);
+    border-color: var(--border-color);
+    background-color: var(--background-color);
+
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.gb-ligne {
+    position: relative;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    display: flex;
+    flex-direction: row;
+}
+
+.gb-cellule {
+    position: relative;
+    margin: auto;
+
+    height: 150px;
+    width: 150px;
+    background-color: black;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Menu ------------------------------------------ */
+#gb-menu {
+    height: var(--gb-height);
+    
+    min-width: 150px;
+
+    position: relative;
+    border: var(--border);
+    border-style: var(--border-style);
+    border-color: var(--border-color);
+    border-left: 0;
+    background-color: var(--background-color);
+
+    display: flex;
+    flex-direction: column;
+}
+
+#gb-menu-pions {
+    height: 100%;
+    max-height: var(--max-height);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gb-menu-pions-item {
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Pions ----------------------------------------- */
+.gb-pion-petit {
+    width: 40px;
+    height: 40px;
+    font-size: 30px;
+}
+
+.gb-pion-moyen {
+    width: 80px;
+    height: 80px;
+    font-size: 45px;
+}
+
+.gb-pion-grand {
+    width: 120px;
+    height: 120px;
+    font-size: 60px;
+}
+
+.gb-pion-rouge {
+    background-color: red;
+    border-radius: 50%;
+}
+
+.gb-pion-bleu {
+    background-color: rgb(63, 63, 217);
+    border-radius: 50%;
+}
+
+.gb-pion-selectionner {
+    opacity: 0.5;
+}
